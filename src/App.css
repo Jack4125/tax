@@ -1,3 +1,9 @@
+input {
+  font-size: 16px;
+  margin: 4px;
+  padding: 4px;
+}
+
 table {
   font-family: arial, sans-serif;
   border-collapse: collapse;

@@ -12,8 +12,8 @@ export default function Tax() {
     fedStandardDeduction: 12950,
     fedBrackets: [10275, 41775, 89075, 170050],
     // State
-    stateStandardDeduction: 4803,
-    stateBrackets: [9325, 22107, 34892, 48435, 61214, 321686],
+    stateStandardDeduction: 5202,
+    stateBrackets: [10099, 23942, 37788, 52455, 66295, 338639],
     // Self
     selfEmploymentRate: 0.153,
   };
@@ -28,6 +28,9 @@ export default function Tax() {
 
   return (
     <div>
+      <h1>Income Tax Calculator</h1>
+      <div>(Self-Employed, 2022)</div>
+      <hr />
       <form onSubmit={handleSubmit}>
         Income:{' '}
         <input
@@ -39,7 +42,7 @@ export default function Tax() {
         <button type="submit">Calculate</button>
       </form>
       <hr />
-      {result ? <Result result={result} /> : null}
+      {result ? <Result rates={rates} result={result} /> : null}
     </div>
   );
 }

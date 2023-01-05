@@ -3,83 +3,151 @@ import React from 'react';
 // state tax https://www.nerdwallet.com/article/taxes/california-state-tax
 
 export default function Calculate(income, rates) {
-  // Federal
+  //*********** Federal ***********
   const fedTaxableIncome = income - rates.fedStandardDeduction;
 
-  let ic = fedTaxableIncome;
+  let fedBracketsResult = [];
+  let totalFedTax;
+  let temp1;
 
-  // let temp;
-  let count = 0;
-  let end = [];
-
-  fuck();
-
-  function fuck() {
-    if (ic > rates.fedBrackets[count]) {
-      end[count] = ic - rates.fedBrackets[count];
-      count++;
-      fuck();
-    } else {
-      end[count] = rates.fedBrackets[count] - ic;
-    }
+  if (fedTaxableIncome <= rates.fedBrackets[0]) {
+    // case 1
+    fedBracketsResult = [fedTaxableIncome * 0.1, 0, 0, 0];
+  } else if (
+    fedTaxableIncome > rates.fedBrackets[0] &&
+    fedTaxableIncome <= rates.fedBrackets[1]
+  ) {
+    // case 2
+    temp1 = fedTaxableIncome - rates.fedBrackets[0];
+    fedBracketsResult = [rates.fedBrackets[0] * 0.1, temp1 * 0.12, 0, 0];
+  } else if (
+    fedTaxableIncome > rates.fedBrackets[1] &&
+    fedTaxableIncome <= rates.fedBrackets[2]
+  ) {
+    // case 3
+    temp1 = fedTaxableIncome - rates.fedBrackets[1];
+    fedBracketsResult = [
+      rates.fedBrackets[0] * 0.1,
+      rates.fedBrackets[1] * 0.12,
+      temp1 * 0.22,
+      0,
+    ];
+  } else if (
+    fedTaxableIncome > rates.fedBrackets[2] &&
+    fedTaxableIncome <= rates.fedBrackets[3]
+  ) {
+    // case 4
+    temp1 = fedTaxableIncome - rates.fedBrackets[2];
+    fedBracketsResult = [
+      rates.fedBrackets[0] * 0.1,
+      rates.fedBrackets[1] * 0.12,
+      rates.fedBrackets[2] * 0.22,
+      temp1 * 0.24,
+    ];
   }
 
-  // for (let i = 0; i < rates.fedBrackets.length; i++) {
-  //   if(rates.fedBrackets[0] < ic) {
-  //     break;
-  //   } else {
+  totalFedTax = fedBracketsResult.reduce((a, b) => a + b, 0);
 
-  //   }
-  // }
+  //*********** State ***********
 
-  // let fedIncomeTax = [0, 0, 0, 0];
+  const stateTaxableIncome = income - rates.stateStandardDeduction;
 
-  // let fedTaxTemp = [
-  //   rates.fedBrackets[0] * 0.1,
-  //   (rates.fedBrackets[1] - rates.fedBrackets[0]) * 0.12,
-  //   (rates.fedBrackets[2] - rates.fedBrackets[1]) * 0.22,
-  //   (rates.fedBrackets[3] - rates.fedBrackets[2]) * 0.24,
-  // ];
+  let stateBracketsResult = [];
+  let totalStateTax;
+  let temp2;
 
-  // if (fedTaxableIncome <= rates.fedBrackets[0]) {
-  //   result = fedTaxableIncome * 0.1;
-  //   fedTaxTemp[0] = result;
-  //   fedTaxTemp[1] = 0;
-  //   fedTaxTemp[2] = 0;
-  //   fedTaxTemp[3] = 0;
-  // } else if (fedTaxableIncome <= rates.fedBrackets[1]) {
-  //   result = (fedTaxableIncome - rates.fedBrackets[0]) * 0.12;
-  //   fedTaxTemp[1] = result;
-  //   fedTaxTemp[2] = 0;
-  //   fedTaxTemp[3] = 0;
-  // } else if (fedTaxableIncome <= rates.fedBrackets[2]) {
-  //   result = (fedTaxableIncome - rates.fedBrackets[1]) * 0.22;
-  //   fedTaxTemp[2] = result;
-  //   fedTaxTemp[3] = 0;
-  // } else if (fedTaxableIncome <= rates.fedBrackets[3]) {
-  //   result = (fedTaxableIncome - rates.fedBrackets[2]) * 0.24;
-  //   fedTaxTemp[3] = result;
-  // } else {
+  if (stateTaxableIncome <= rates.stateBrackets[0]) {
+    // case 1
+    stateBracketsResult = [stateTaxableIncome * 0.01, 0, 0, 0, 0, 0];
+  } else if (
+    stateTaxableIncome > rates.stateBrackets[0] &&
+    stateTaxableIncome <= rates.stateBrackets[1]
+  ) {
+    // case 2
+    temp2 = stateTaxableIncome - rates.stateBrackets[0];
+    stateBracketsResult = [
+      rates.stateBrackets[0] * 0.01,
+      temp2 * 0.02,
+      0,
+      0,
+      0,
+      0,
+    ];
+  } else if (
+    stateTaxableIncome > rates.stateBrackets[1] &&
+    stateTaxableIncome <= rates.stateBrackets[2]
+  ) {
+    // case 3
+    temp2 = stateTaxableIncome - rates.stateBrackets[1];
+    stateBracketsResult = [
+      rates.stateBrackets[0] * 0.01,
+      rates.stateBrackets[1] * 0.02,
+      temp2 * 0.04,
+      0,
+      0,
+      0,
+    ];
+  } else if (
+    stateTaxableIncome > rates.stateBrackets[2] &&
+    stateTaxableIncome <= rates.stateBrackets[3]
+  ) {
+    // case 4
+    temp2 = stateTaxableIncome - rates.stateBrackets[2];
+    stateBracketsResult = [
+      rates.stateBrackets[0] * 0.01,
+      rates.stateBrackets[1] * 0.02,
+      rates.stateBrackets[2] * 0.04,
+      temp2 * 0.06,
+      0,
+      0,
+    ];
+  } else if (
+    stateTaxableIncome > rates.stateBrackets[3] &&
+    stateTaxableIncome <= rates.stateBrackets[4]
+  ) {
+    // case 4
+    temp2 = stateTaxableIncome - rates.stateBrackets[3];
+    stateBracketsResult = [
+      rates.stateBrackets[0] * 0.01,
+      rates.stateBrackets[1] * 0.02,
+      rates.stateBrackets[2] * 0.04,
+      rates.stateBrackets[3] * 0.06,
+      temp2 * 0.08,
+      0,
+    ];
+  } else if (
+    stateTaxableIncome > rates.stateBrackets[4] &&
+    stateTaxableIncome <= rates.stateBrackets[5]
+  ) {
+    // case 4
+    temp2 = stateTaxableIncome - rates.stateBrackets[4];
+    stateBracketsResult = [
+      rates.stateBrackets[0] * 0.01,
+      rates.stateBrackets[1] * 0.02,
+      rates.stateBrackets[2] * 0.04,
+      rates.stateBrackets[3] * 0.06,
+      rates.stateBrackets[4] * 0.08,
+      temp2 * 0.093,
+    ];
+  }
 
-  // }
+  totalStateTax = stateBracketsResult.reduce((a, b) => a + b, 0);
 
-  // let totalFedTax = fedTaxTemp.reduce((a, b) => a + b, 0);
-
-  // State
-  // const stateTaxableIncome = income - rates.stateStandardDeduction;
-
-  // total
+  //*********** total ***********
   let selfEmploymentTax = income * rates.selfEmploymentRate;
 
-  // let totalTax = totalFedTax + totalStateTax selfEmploymentTax;
-  let totalTax = selfEmploymentTax;
+  let totalTax = totalFedTax + totalStateTax + selfEmploymentTax;
 
   let profit = income - totalTax;
   let profitRate = ((income - totalTax) / income) * 100;
 
   let result = {
     fedTaxableIncome,
-    // stateTaxableIncome,
+    fedBracketsResult,
+    totalFedTax,
+    stateTaxableIncome,
+    stateBracketsResult,
+    totalStateTax,
     selfEmploymentTax,
     totalTax,
     profit,
