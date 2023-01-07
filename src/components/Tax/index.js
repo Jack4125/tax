@@ -18,7 +18,7 @@ export default function Tax() {
     selfEmploymentRate: 0.153,
   };
 
-  const [income, setIncome] = useState(65000);
+  const [income, setIncome] = useState(51000);
   const [result, setResult] = useState(null);
 
   function handleSubmit(e) {
