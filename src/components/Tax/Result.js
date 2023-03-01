@@ -111,48 +111,48 @@ export default function Result({ rates, result }) {
             </tr>
             <tr>
               <td>1%</td>
-              <td>$0 - ${rates.stateBrackets[0].toLocaleString()}</td>
-              <td>{result.stateBracketsResult[0].toLocaleString()}</td>
+              <td>$0 - ${rates.stateBrackets[1].toLocaleString()}</td>
+              <td>{result.stateResultArray[1].toLocaleString()}</td>
             </tr>
             <tr>
               <td>2%</td>
               <td>
-                ${(rates.stateBrackets[0] + 1).toLocaleString()} - $
-                {rates.stateBrackets[1].toLocaleString()}
+                ${(rates.stateBrackets[1] + 1).toLocaleString()} - $
+                {rates.stateBrackets[2].toLocaleString()}
               </td>
-              <td>{result.stateBracketsResult[1].toLocaleString()}</td>
+              <td>{result.stateResultArray[2].toLocaleString()}</td>
             </tr>
             <tr>
               <td>4%</td>
               <td>
-                ${(rates.stateBrackets[1] + 1).toLocaleString()} - $
-                {rates.stateBrackets[2].toLocaleString()}
+                ${(rates.stateBrackets[2] + 1).toLocaleString()} - $
+                {rates.stateBrackets[3].toLocaleString()}
               </td>
-              <td>{result.stateBracketsResult[2].toLocaleString()}</td>
+              <td>{result.stateResultArray[3].toLocaleString()}</td>
             </tr>
             <tr>
               <td>6%</td>
               <td>
-                ${(rates.stateBrackets[2] + 1).toLocaleString()} - $
-                {rates.stateBrackets[3].toLocaleString()}
+                ${(rates.stateBrackets[3] + 1).toLocaleString()} - $
+                {rates.stateBrackets[4].toLocaleString()}
               </td>
-              <td>{result.stateBracketsResult[3].toLocaleString()}</td>
+              <td>{result.stateResultArray[4].toLocaleString()}</td>
             </tr>
             <tr>
               <td>8%</td>
               <td>
-                ${(rates.stateBrackets[3] + 1).toLocaleString()} - $
-                {rates.stateBrackets[4].toLocaleString()}
+                ${(rates.stateBrackets[4] + 1).toLocaleString()} - $
+                {rates.stateBrackets[5].toLocaleString()}
               </td>
-              <td>{result.stateBracketsResult[4].toLocaleString()}</td>
+              <td>{result.stateResultArray[5].toLocaleString()}</td>
             </tr>
             <tr>
               <td>9.3%</td>
               <td>
-                ${(rates.stateBrackets[4] + 1).toLocaleString()} - $
-                {rates.stateBrackets[5].toLocaleString()}
+                ${(rates.stateBrackets[5] + 1).toLocaleString()} - $
+                {rates.stateBrackets[6].toLocaleString()}
               </td>
-              <td>{result.stateBracketsResult[5].toLocaleString()}</td>
+              <td>{result.stateResultArray[6].toLocaleString()}</td>
             </tr>
           </tbody>
         </table>

@@ -47,90 +47,45 @@ export default function fedEndulate(income, rates) {
   //*********** State ***********
   const stateTaxableIncome = income - rates.stateStandardDeduction;
 
-  let stateBracketsResult = [];
-  let totalStateTax;
-  let temp2;
+  let stateCurrent = [0];
+  let stateSum = [0];
+  let stateResultArray = [0];
 
-  console.log('taxable: ' + stateTaxableIncome);
-
-  if (stateTaxableIncome <= rates.stateBrackets[0]) {
-    // case 1
-    stateBracketsResult = [stateTaxableIncome * 0.01, 0, 0, 0, 0, 0];
-  } else if (
-    stateTaxableIncome > rates.stateBrackets[0] &&
-    stateTaxableIncome <= rates.stateBrackets[1]
-  ) {
-    // case 2
-    temp2 = stateTaxableIncome - rates.stateBrackets[0];
-    stateBracketsResult = [
-      rates.stateBrackets[0] * 0.01,
-      temp2 * 0.02,
-      0,
-      0,
-      0,
-      0,
-    ];
-  } else if (
-    stateTaxableIncome > rates.stateBrackets[1] &&
-    stateTaxableIncome <= rates.stateBrackets[2]
-  ) {
-    // case 3
-    temp2 = stateTaxableIncome - rates.stateBrackets[1];
-    stateBracketsResult = [
-      rates.stateBrackets[0] * 0.01,
-      rates.stateBrackets[1] * 0.02,
-      temp2 * 0.04,
-      0,
-      0,
-      0,
-    ];
-  } else if (
-    stateTaxableIncome > rates.stateBrackets[2] &&
-    stateTaxableIncome <= rates.stateBrackets[3]
-  ) {
-    // case 4
-    temp2 = stateTaxableIncome - rates.stateBrackets[2];
-    console.log(temp2);
-    stateBracketsResult = [
-      rates.stateBrackets[0] * 0.01,
-      rates.stateBrackets[1] * 0.02,
-      rates.stateBrackets[2] * 0.04,
-      temp2 * 0.06,
-      0,
-      0,
-    ];
-  } else if (
-    stateTaxableIncome > rates.stateBrackets[3] &&
-    stateTaxableIncome <= rates.stateBrackets[4]
-  ) {
-    // case 4
-    temp2 = stateTaxableIncome - rates.stateBrackets[3];
-    console.log(temp2);
-    stateBracketsResult = [
-      rates.stateBrackets[0] * 0.01,
-      rates.stateBrackets[1] * 0.02,
-      rates.stateBrackets[2] * 0.04,
-      rates.stateBrackets[3] * 0.06,
-      temp2 * 0.08,
-      0,
-    ];
-  } else if (
-    stateTaxableIncome > rates.stateBrackets[4] &&
-    stateTaxableIncome <= rates.stateBrackets[5]
-  ) {
-    // case 4
-    temp2 = stateTaxableIncome - rates.stateBrackets[4];
-    stateBracketsResult = [
-      rates.stateBrackets[0] * 0.01,
-      rates.stateBrackets[1] * 0.02,
-      rates.stateBrackets[2] * 0.04,
-      rates.stateBrackets[3] * 0.06,
-      rates.stateBrackets[4] * 0.08,
-      temp2 * 0.093,
-    ];
+  for (let i = 1; i < rates.stateBrackets.length; i++) {
+    stateCurrent.push(
+      (rates.stateBrackets[i] - rates.stateBrackets[i - 1]) *
+        rates.stateRates[i]
+    );
+    stateSum.push(
+      (rates.stateBrackets[i] - rates.stateBrackets[i - 1]) *
+        rates.stateRates[i] +
+        stateSum[i - 1]
+    );
+    stateResultArray.push(0);
   }
 
-  totalStateTax = stateBracketsResult.reduce((a, b) => a + b, 0);
+  let stateFinalIndex = 0;
+
+  for (let i = 0; i < rates.stateBrackets.length; i++) {
+    if (stateTaxableIncome < rates.stateBrackets[i]) {
+      stateFinalIndex = i;
+      break;
+    }
+  }
+
+  let stateEnd =
+    (stateTaxableIncome - rates.stateBrackets[stateFinalIndex - 1]) *
+    rates.stateRates[stateFinalIndex];
+
+  for (let i = 0; i <= stateFinalIndex; i++) {
+    if (i !== stateFinalIndex) {
+      stateResultArray[i] = stateCurrent[i];
+    } else {
+      stateResultArray[i] = stateEnd;
+    }
+  }
+
+  let totalStateTax = stateSum[stateFinalIndex - 1] + stateEnd;
 
   //*********** total ***********
   let selfEmploymentTax = income * rates.selfEmploymentRate;
@@ -148,7 +103,9 @@ export default function fedEndulate(income, rates) {
     fedResultArray,
     totalFedTax,
     stateTaxableIncome,
-    stateBracketsResult,
+    stateCurrent,
+    stateSum,
+    stateResultArray,
     totalStateTax,
     selfEmploymentTax,
     totalTax,

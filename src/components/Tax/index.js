@@ -32,13 +32,13 @@ export default function Tax() {
     // State
     // unadjusted for 2023-2024
     stateStandardDeduction: 5202,
-    stateBrackets: [10099, 23942, 37788, 52455, 66295, 338639],
-    stateRates: [0.01, 0.02, 0.04, 0.06, 0.08, 0.093],
+    stateBrackets: [0, 10099, 23942, 37788, 52455, 66295, 338639],
+    stateRates: [0, 0.01, 0.02, 0.04, 0.06, 0.08, 0.093],
     // Self
     selfEmploymentRate: 0.153,
   };
 
-  const [income, setIncome] = useState(51000);
+  const [income, setIncome] = useState(58000);
   const [result, setResult] = useState(null);
 
   function handleSubmit(e) {
