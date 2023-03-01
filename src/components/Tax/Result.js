@@ -51,32 +51,33 @@ export default function Result({ rates, result }) {
             </tr>
             <tr>
               <td>10%</td>
-              <td>$0 - ${rates.fedBrackets[0].toLocaleString()}</td>
-              <td>{result.fedBracketsResult[0]}</td>
+              <td>$0 - ${rates.fedBrackets[1].toLocaleString()}</td>
+
+              <td>{result.fedResultArray[1]}</td>
             </tr>
             <tr>
               <td>12%</td>
               <td>
-                ${(rates.fedBrackets[0] + 1).toLocaleString()} - $
-                {rates.fedBrackets[1].toLocaleString()}
+                ${(rates.fedBrackets[1] + 1).toLocaleString()} - $
+                {rates.fedBrackets[2].toLocaleString()}
               </td>
-              <td>{result.fedBracketsResult[1]}</td>
+              <td>{result.fedResultArray[2]}</td>
             </tr>
             <tr>
               <td>22%</td>
               <td>
-                ${(rates.fedBrackets[1] + 1).toLocaleString()} - $
-                {rates.fedBrackets[2].toLocaleString()}
+                ${(rates.fedBrackets[2] + 1).toLocaleString()} - $
+                {rates.fedBrackets[3].toLocaleString()}
               </td>
-              <td>{result.fedBracketsResult[2]}</td>
+              <td>{result.fedResultArray[3]}</td>
             </tr>
             <tr>
               <td>24%</td>
               <td>
-                ${(rates.fedBrackets[2] + 1).toLocaleString()} - $
-                {rates.fedBrackets[3].toLocaleString()}
+                ${(rates.fedBrackets[4] + 1).toLocaleString()} - $
+                {rates.fedBrackets[4].toLocaleString()}
               </td>
-              <td>{result.fedBracketsResult[3]}</td>
+              <td>{result.fedResultArray[4]}</td>
             </tr>
           </tbody>
         </table>
